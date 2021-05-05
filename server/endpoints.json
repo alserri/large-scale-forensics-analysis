@@ -1,0 +1,16 @@
+[
+    {
+        "endpointID": "hgQWruKSUGJh74URvoe7u5",
+        "hostname": "MSEDGEWIN10",
+        "ip": "192.168.0.34",
+        "os": "windows",
+        "lastactive": "2021-05-03 01:50:16"
+    },
+    {
+        "endpointID": "vX8fQqMp5vMnDpj9eSCTp3",
+        "hostname": "DESKTOP-B8P8F25",
+        "ip": "127.0.0.1",
+        "os": "windows",
+        "lastactive": "2021-05-03 01:52:53"
+    }
+]
