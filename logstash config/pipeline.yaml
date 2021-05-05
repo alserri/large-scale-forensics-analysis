@@ -1,0 +1,74 @@
+input
+{
+    beats
+    {
+        ssl => false
+        host => "0.0.0.0"
+        port => 5044
+    }
+    gelf
+    {
+        host => "0.0.0.0"
+        port => 12201
+    }
+    http
+    {
+        ssl => false
+        host => "0.0.0.0"
+        port => 8080
+    }
+    tcp
+    {
+        mode => "server"
+        host => "0.0.0.0"
+        port => 5010
+    }
+    udp
+    {
+        host => "0.0.0.0"
+        port => 5000
+    }
+}
+
+
+filter{
+
+if "browsinghistory" in [tags]{
+
+  csv {
+  columns => ["URL","Title","Visit Time","Visit Count","Visited From","Visit Type","Web Browser","User Profile","Browser Profile","URL Length","Typed Count","History File","Record ID"]
+  }
+  
+}
+
+if "prefetch" in [tags]{
+    csv{
+    columns => ["Note","SourceFilename","SourceCreated","SourceModified","SourceAccessed","ExecutableName","Hash","Size","Version","RunCount","LastRun","PreviousRun0","PreviousRun1","PreviousRun2","PreviousRun3","PreviousRun4","PreviousRun5","PreviousRun6","Volume0Name","Volume0Serial","Volume0Created","Volume1Name","Volume1Serial","Volume1Created","Directories","FilesLoaded","ParsingError"]
+
+    }
+  }
+
+
+
+if "timelineactivity" in [tags]{
+
+  csv {
+  
+  columns => ["Id","ActivityTypeOrg","ActivityType","Executable","DisplayText","ContentInfo","Payload","ClipboardPayload","StartTime","EndTime","Duration","LastModifiedTime","LastModifiedOnClient","OriginalLastModifiedOnClient","ExpirationTime","CreatedInCloud","IsLocalOnly","ETag","PackageIdHash","PlatformDeviceId","DevicePlatform","TimeZone"]
+  }
+
+  }
+
+}
+
+
+
+output
+{
+    elasticsearch
+    {
+        hosts => ["127.0.0.1:9200"]
+#        document_id => "%{logstash_checksum}"
+        index => "logstash-%{+YYYY.MM.dd}"
+    }
+}
